@@ -59,7 +59,7 @@ export function Map({ locations, center = [-23.5505, -46.6333], zoom = 13 }: Map
             <h3 style="font-weight:800;font-size:1rem;line-height:1.2;margin:0;">${getCategoriaIcon(loc.categoria)} ${
         loc.nome
       }</h3>
-            <span style="background: hsl(221 83% 38% / .1); color: hsl(221 83% 38%); padding:.25rem .5rem; border-radius:.5rem; font-size:.75rem;">${getCategoriaLabel(
+            <span style="background: hsl(221 83% 38% / .1); color: hsla(255, 83%, 38%, 1.00); padding:.25rem .5rem; border-radius:.5rem; font-size:.75rem;">${getCategoriaLabel(
               loc.categoria
             )}</span>
           </header>
