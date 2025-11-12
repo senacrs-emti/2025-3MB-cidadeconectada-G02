@@ -27,10 +27,10 @@ export function RatingInput({ label, value, onChange, icon }: RatingInputProps) 
             role="radio"
           >
             <Star
-              className={`w-10 h-10 ${
+              className={`w-10 h-10 transition-colors duration-200 ${
                 rating <= value
-                  ? 'fill-secondary text-secondary'
-                  : 'fill-muted text-muted'
+                  ? 'fill-yellow-400 text-yellow-400' // ⭐ Amarelo para estrelas selecionadas
+                  : 'fill-muted text-muted-foreground' // Cinza para as não selecionadas
               }`}
             />
           </button>
