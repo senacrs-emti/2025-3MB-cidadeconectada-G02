@@ -14,8 +14,6 @@ import { toast } from 'sonner';
 import 'leaflet/dist/leaflet.css';
 import PickLocationMap, { LatLngLiteral } from '@/components/PickLocationMap';
 
-// Removido react-leaflet Consumer para evitar erro de contexto
-
 const Add = () => {
   const navigate = useNavigate();
   const [nome, setNome] = useState('');
@@ -77,7 +75,7 @@ const Add = () => {
                 id="nome"
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
-                placeholder="Ex: Parque Ibirapuera"
+                placeholder="Ex: Parque Farroupilha (Redenção)"
                 className="text-base"
                 required
               />
@@ -104,33 +102,35 @@ const Add = () => {
             <div className="space-y-4">
               <h2 className="text-xl font-bold">Avaliação de Acessibilidade</h2>
               
-              <RatingInput
-                label="Rampas"
-                icon="♿"
-                value={ratings.rampas}
-                onChange={(value) => setRatings({ ...ratings, rampas: value })}
-              />
-              
-              <RatingInput
-                label="Banheiros Acessíveis"
-                icon="🚻"
-                value={ratings.banheiros}
-                onChange={(value) => setRatings({ ...ratings, banheiros: value })}
-              />
-              
-              <RatingInput
-                label="Elevadores"
-                icon="🛗"
-                value={ratings.elevadores}
-                onChange={(value) => setRatings({ ...ratings, elevadores: value })}
-              />
-              
-              <RatingInput
-                label="Vagas para PCD"
-                icon="🅿️"
-                value={ratings.vagas}
-                onChange={(value) => setRatings({ ...ratings, vagas: value })}
-              />
+              <RatingInput label="Rampas" icon="♿" value={ratings.rampas} onChange={(v) => setRatings({ ...ratings, rampas: v })} />
+              <RatingInput label="Banheiros Acessíveis" icon="🚻" value={ratings.banheiros} onChange={(v) => setRatings({ ...ratings, banheiros: v })} />
+              <RatingInput label="Elevadores" icon="🛗" value={ratings.elevadores} onChange={(v) => setRatings({ ...ratings, elevadores: v })} />
+              <RatingInput label="Vagas para PCD" icon="🅿️" value={ratings.vagas} onChange={(v) => setRatings({ ...ratings, vagas: v })} />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-base font-semibold">
+                Localização no Mapa *
+              </Label>
+              <p className="text-sm text-muted-foreground mb-2">
+                Clique no mapa para selecionar a localização do local
+              </p>
+
+              {/* 👇 Aqui o mapa agora inicia em Porto Alegre */}
+              <div className="h-64 md:h-96 rounded-lg overflow-hidden border-2 border-border">
+                <PickLocationMap
+                  value={position}
+                  onChange={setPosition}
+                  center={{ lat: -30.0346, lng: -51.2177 }} // ✅ centro em Porto Alegre
+                  zoom={13}
+                />
+              </div>
+
+              {position && (
+                <p className="text-sm text-success">
+                  ✓ Localização selecionada: {position.lat.toFixed(6)}, {position.lng.toFixed(6)}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -145,26 +145,7 @@ const Add = () => {
                 className="text-base min-h-24"
                 maxLength={500}
               />
-              <p className="text-sm text-muted-foreground">
-                {comentario.length}/500 caracteres
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-base font-semibold">
-                Localização no Mapa *
-              </Label>
-              <p className="text-sm text-muted-foreground mb-2">
-                Clique no mapa para selecionar a localização do local
-              </p>
-<div className="h-64 md:h-96 rounded-lg overflow-hidden border-2 border-border">
-                <PickLocationMap value={position} onChange={setPosition} />
-              </div>
-              {position && (
-                <p className="text-sm text-success">
-                  ✓ Localização selecionada: {position.lat.toFixed(6)}, {position.lng.toFixed(6)}
-                </p>
-              )}
+              <p className="text-sm text-muted-foreground">{comentario.length}/500 caracteres</p>
             </div>
 
             <div className="flex gap-4 pt-4">
@@ -177,11 +158,7 @@ const Add = () => {
               >
                 Cancelar
               </Button>
-              <Button
-                type="submit"
-                size="lg"
-                className="flex-1"
-              >
+              <Button type="submit" size="lg" className="flex-1">
                 Salvar Local
               </Button>
             </div>
