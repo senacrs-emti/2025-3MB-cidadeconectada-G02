@@ -9,17 +9,20 @@ import { Location } from '@/types/location';
 
 const Index = () => {
   const [locations, setLocations] = useState<Location[]>([]);
-  const [showWelcome, setShowWelcome] = useState(true); // 👈 controla a exibição do pop-up
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
     const loadedLocations = storage.getLocations();
     setLocations(loadedLocations);
+
+    // 👇 Mostra o pop-up sempre que a página for recarregada/iniciada
+    setShowWelcome(true);
   }, []);
 
   return (
     <div className="flex flex-col min-h-screen relative">
       <Header />
-      
+
       <main className="flex-1 relative">
         <div className="absolute inset-0">
           <Map locations={locations} />
@@ -40,10 +43,10 @@ const Index = () => {
           </Button>
         </Link>
 
-        {/* Pop-up de boas-vindas */}
+        {/* Pop-up de boas-vindas (mostra ao iniciar/reiniciar a página) */}
         {showWelcome && locations.length === 0 && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-[2000]">
-            <div className="relative bg-card p-8 rounded-2xl shadow-2xl max-w-md text-center">
+          <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-[2000] animate-fade-in">
+            <div className="relative bg-card p-8 rounded-2xl shadow-2xl max-w-md text-center animate-scale-in">
               {/* Botão X para fechar */}
               <button
                 onClick={() => setShowWelcome(false)}
