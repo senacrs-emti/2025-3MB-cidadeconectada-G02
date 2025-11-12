@@ -9,7 +9,7 @@ interface MapProps {
   zoom?: number;
 }
 
-export function Map({ locations, center = [-23.5505, -46.6333], zoom = 13 }: MapProps) {
+export function Map({ locations, center = [-30.0346, -51.2177], zoom = 13 }: MapProps) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const leafletRef = useRef<LeafletMap | null>(null);
   const markersLayerRef = useRef<L.LayerGroup | null>(null);
@@ -17,7 +17,7 @@ export function Map({ locations, center = [-23.5505, -46.6333], zoom = 13 }: Map
   useEffect(() => {
     if (!mapRef.current) return;
 
-    // Initialize map once
+    // Inicializa o mapa uma vez
     if (!leafletRef.current) {
       leafletRef.current = L.map(mapRef.current, {
         center,
@@ -32,11 +32,11 @@ export function Map({ locations, center = [-23.5505, -46.6333], zoom = 13 }: Map
 
       markersLayerRef.current = L.layerGroup().addTo(leafletRef.current);
     } else {
-      // Update center/zoom if props change
+      // Atualiza centro/zoom se as props mudarem
       leafletRef.current.setView(center, zoom);
     }
 
-    // Update markers
+    // Atualiza os marcadores
     const layer = markersLayerRef.current!;
     layer.clearLayers();
 
@@ -86,7 +86,7 @@ export function Map({ locations, center = [-23.5505, -46.6333], zoom = 13 }: Map
     });
 
     return () => {
-      // Do not remove map instance on rerenders, only on unmount
+      // Mantém o mapa até desmontar o componente
     };
   }, [locations, center, zoom]);
 
@@ -99,7 +99,14 @@ export function Map({ locations, center = [-23.5505, -46.6333], zoom = 13 }: Map
     };
   }, []);
 
-  return <div ref={mapRef} className="w-full h-full rounded-lg" style={{ minHeight: '400px' }} aria-label="Mapa de acessibilidade" />;
+  return (
+    <div
+      ref={mapRef}
+      className="w-full h-full rounded-lg"
+      style={{ minHeight: '400px' }}
+      aria-label="Mapa de acessibilidade"
+    />
+  );
 }
 
 export default Map;

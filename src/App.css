@@ -1,6 +1,6 @@
 #root {
   max-width: 1280px;
-  margin: 0 auto;
+  margin: 5 auto;
   padding: 2rem;
   text-align: center;
 }
@@ -38,5 +38,5 @@
 }
 
 .read-the-docs {
-  color: #888;
+  color: #a20000;
 }
